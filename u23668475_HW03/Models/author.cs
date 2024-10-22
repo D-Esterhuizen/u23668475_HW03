@@ -7,21 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace u23668475_HW03
+namespace u23668475_HW03.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class type
+    public partial class author
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public type()
+        public author()
         {
             this.books = new HashSet<book>();
         }
     
-        public int typeId { get; set; }
+        public int authorId { get; set; }
         public string name { get; set; }
+        public string surname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<book> books { get; set; }

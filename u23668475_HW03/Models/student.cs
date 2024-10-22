@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace u23668475_HW03
+namespace u23668475_HW03.Models
 {
     using System;
     using System.Collections.Generic;
