@@ -5,22 +5,35 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using u23668475_HW03.Models;
+using System.Web.UI;
+using PagedList;
 
 namespace u23668475_HW03.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<ActionResult> Index()
+        private LibraryEntities db = new LibraryEntities();
+        public async Task<ActionResult> Index(int? page)
         {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
             using (var dbContext = new LibraryEntities())
             {
-                 var AuthorsList = await dbContext.authors.ToListAsync();
-                 var BooksList = await dbContext.books.ToListAsync();
-                 var BorrowsList = await dbContext.borrows.ToListAsync();
-                 var StudentsList = await dbContext.students.ToListAsync();
-                 var TypeList = await dbContext.types.ToListAsync();
+                var studentsList = await dbContext.students.OrderBy(s => s.name).ToListAsync();
+                var pagedStudents = studentsList.ToPagedList(pageNumber, pageSize);
+
+                var combinedViewModel = new CombinedViewModel
+                {
+                    Students = pagedStudents,
+                    Books = await dbContext.books.ToListAsync(),
+                    Borrows = await dbContext.borrows.ToListAsync(),
+                    Authors = await dbContext.authors.ToListAsync()
+                };
+                return View(combinedViewModel);
             }
-                return View();
+                
         }
 
         public ActionResult About()

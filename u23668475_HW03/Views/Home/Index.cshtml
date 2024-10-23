@@ -1,40 +1,101 @@
-﻿@{
+﻿@model u23668475_HW03.Models.CombinedViewModel
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="col-md-5">
-    <h2>Sample Entities</h2>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Students</h2>
 
-    <p>
-        <a href="#" class="create-link" data-url="@Url.Action("Create", "students")">Create New Sample Entity</a>
-    </p>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="@Url.Action("Create", "students")" class="btn btn-primary">Create New Student</a>
+            </div>
 
-    <table class="table" style="width:100%">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.students.)
-            </th>
-            <th>
-                LookUp Attribute
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model.students)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.students_Attribute)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SampleLookUp.SampleLookUp_Attribute)
-                </td>
-                <td class="text-end">
-                    <!-- Add text-end class here -->
-                    <a href="#" class="edit-link" data-url="@Url.Action("Edit", "SampleEntities", new { id = item.SampleEntityPK })">Edit</a>
-                    <a href="#" class="details-link" data-url="@Url.Action("Details", "SampleEntities", new { id = item.SampleEntityPK })">Details</a>
-                    <a href="#" class="delete-link" data-url="@Url.Action("Delete", "SampleEntities", new { id = item.SampleEntityPK })">Delete</a>
-                </td>
-            </tr>
-        }
-    </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Date of Birth</th>
+                            <th>Gender</th>
+                            <th>Points</th>
+                            <th>Class</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Students)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.surname)</td>
+                                <td>@Html.DisplayFor(modelItem => item.birthdate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                                <td>@Html.DisplayFor(modelItem => item.point)</td>
+                                <td>@Html.DisplayFor(modelItem => item.@class)</td>
+                                <td class="text-end">
+                                    <a href="@Url.Action("Details", "students", new { id = item.studentId })"
+                                       class="details-link">
+                                        Details
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add the PagedList pagination controls here -->
+            <div class="d-flex justify-content-center">
+                @Html.PagedListPager((IPagedList)Model.Students, page => Url.Action("Index", new { page }))
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<script>
+    $(function () {
+        // Function to handle Edit link click event in the Combined View and Details modal
+        $(".edit-link, .edit-link-in-modal").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $("#modal-content").empty();
+                $("#modal-content").html(data);
+                $("#myModal").modal("show");
+            });
+        });
+
+        // Function to handle form submission within the modal
+        $("#modal-content").on("submit", "form", function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr("action");
+            var formData = form.serialize();
+
+            $.post(url, formData, function (data) {
+                $("#myModal").modal("hide");
+                location.reload();
+            });
+        });
+
+        // Function to handle other links (details, delete, create) within the modal
+        $(".details-link, .delete-link, .create-link, .create-lookup-link").click(function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $("#modal-content").empty();
+                $("#modal-content").html(data);
+                $("#myModal").modal("show");
+            });
+        });
+    });
+</script>

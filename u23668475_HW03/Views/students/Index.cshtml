@@ -1,4 +1,4 @@
-﻿@model IEnumerable<u23668475_HW03.student>
+﻿@model IEnumerable<u23668475_HW03.Models.student>
 
 @{
     ViewBag.Title = "Index";
@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.gender)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.class)
+            @Html.DisplayNameFor(model => model.@class)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.point)
@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.gender)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.class)
+            @Html.DisplayFor(modelItem => item.@class)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.point)

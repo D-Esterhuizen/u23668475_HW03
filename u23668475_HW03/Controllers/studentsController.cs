@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using u23668475_HW03;
+using u23668475_HW03.Models;
 
 namespace u23668475_HW03.Controllers
 {
@@ -18,7 +19,7 @@ namespace u23668475_HW03.Controllers
         // GET: students
         public async Task<ActionResult> Index()
         {
-            return View(await db.students.ToListAsync());
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: students/Details/5

@@ -8,12 +8,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using u23668475_HW03;
+using u23668475_HW03.Models;
 
 namespace u23668475_HW03.Controllers
 {
     public class borrowsController : Controller
     {
-        private LibraryEntities db = new LibraryEntities();
+        private LibraryEntities db = new LibraryEntities ();
 
         // GET: borrows
         public async Task<ActionResult> Index()
