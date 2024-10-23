@@ -5,96 +5,240 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<style>
+    .container-fluid {
+        color: #f5f5f5;
+        background-color: #2b2b2b;
+        padding: 20px;
+    }
 
-<div class="container mt-5">
+    h2 {
+        color: #ffffff;
+    }
+
+    .card {
+        background-color: #3a3a3a;
+    }
+
+    .card-body {
+        background-color: #2b2b2b;
+        border-radius: 10px;
+    }
+
+    .table {
+        color: #ffffff;
+        border-color: #444;
+    }
+
+        .table th {
+            background-color: #3a3a3a;
+        }
+
+        .table tbody tr {
+            background-color: #2b2b2b;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            .table tbody tr:hover {
+                background-color: #444;
+                color: #f0f0f0;
+            }
+
+    .table-hover tbody tr:hover td {
+        color: #fff;
+    }
+
+    .table td, .table th {
+        border: 1px solid #444;
+    }
+
+    .pagination {
+        color: #ffffff;
+    }
+
+        .pagination .page-item .page-link {
+            color: #ffffff;
+            background-color: #3a3a3a;
+            border: 1px solid #444;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #555;
+            border-color: #777;
+        }
+
+    .btn-primary {
+        background-color: #4a4a4a;
+        border-color: #555;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a5a5a;
+            border-color: #666;
+        }
+
+</style>
+<div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h2 class="mb-4">Students</h2>
-
             <div class="d-flex justify-content-end mb-3">
                 <a href="@Url.Action("Create", "students")" class="btn btn-primary">Create New Student</a>
             </div>
-
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Date of Birth</th>
-                            <th>Gender</th>
-                            <th>Points</th>
-                            <th>Class</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Students)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.surname)</td>
-                                <td>@Html.DisplayFor(modelItem => item.birthdate)</td>
-                                <td>@Html.DisplayFor(modelItem => item.gender)</td>
-                                <td>@Html.DisplayFor(modelItem => item.point)</td>
-                                <td>@Html.DisplayFor(modelItem => item.@class)</td>
-                                <td class="text-end">
-                                    <a href="@Url.Action("Details", "students", new { id = item.studentId })"
-                                       class="details-link">
-                                        Details
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+            <div class="card shadow-sm">
+                <div class="card-body" style="background-color: #878787b3">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-sm student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Date of Birth</th>
+                                    <th>Gender</th>
+                                    <th>Points</th>
+                                    <th>Class</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Students)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.surname)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.birthdate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.point)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.@class)</td>
+                                        <td class="text-end">
+                                            <a href="@Url.Action("Details", "students", new { id = item.studentId })" class="details-link btn-primary">
+                                                Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        @Html.PagedListPager((IPagedList)Model.Students, page => Url.Action("Index", new { page }),
+                            new PagedListRenderOptions
+                            {
+                                LinkToPreviousPageFormat = "Previous",
+                                LinkToNextPageFormat = "Next",
+                                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                Display = PagedListDisplayMode.IfNeeded,
+                                ClassToApplyToFirstListItemInPager = "page-item",
+                                ClassToApplyToLastListItemInPager = "page-item",
+                                LinkToFirstPageFormat = "First",
+                                LinkToLastPageFormat = "Last",
+                                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                                LiElementClasses = new[] { "page-item" }
+                            })
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <!-- Add the PagedList pagination controls here -->
-            <div class="d-flex justify-content-center">
-                @Html.PagedListPager((IPagedList)Model.Students, page => Url.Action("Index", new { page }))
+        <div class="col-md-6">
+            <h2 class="mb-4">Books</h2>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="@Url.Action("Create", "books")" class="btn btn-primary">Add a New Book</a>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body" style="background-color: #878787b3">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-sm book-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Page Count</th>
+                                    <th>Point</th>
+                                    <th>Author</th>
+                                    <th>Genre</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Books)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.pagecount)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.point)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.author.name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.type.name)</td>
+                                        <td class="text-end">
+                                            <a href="@Url.Action("Details", "books", new { id = item.bookId })" class="details-link btn-primary">
+                                                Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        @Html.PagedListPager((IPagedList)Model.Books, page => Url.Action("Index", new { page }),
+                            new PagedListRenderOptions
+                            {
+                                LinkToPreviousPageFormat = "Previous",
+                                LinkToNextPageFormat = "Next",
+                                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                Display = PagedListDisplayMode.IfNeeded,
+                                ClassToApplyToFirstListItemInPager = "page-item",
+                                ClassToApplyToLastListItemInPager = "page-item",
+                                LinkToFirstPageFormat = "First",
+                                LinkToLastPageFormat = "Last",
+                                UlElementClasses = new[] { "pagination", "justify-content-center" },
+                                LiElementClasses = new[] { "page-item" }
+                            })
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sample Async CRUD</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-content">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(function () {
-        // Function to handle Edit link click event in the Combined View and Details modal
-        $(".edit-link, .edit-link-in-modal").click(function (e) {
+        $(".edit-link, .details-link, .delete-link, .create-link, .create-lookup-link").click(function (e) {
             e.preventDefault();
             var url = $(this).data("url");
-
             $.get(url, function (data) {
-                $("#modal-content").empty();
                 $("#modal-content").html(data);
                 $("#myModal").modal("show");
             });
         });
 
-        // Function to handle form submission within the modal
         $("#modal-content").on("submit", "form", function (e) {
             e.preventDefault();
             var form = $(this);
             var url = form.attr("action");
             var formData = form.serialize();
-
             $.post(url, formData, function (data) {
                 $("#myModal").modal("hide");
                 location.reload();
-            });
-        });
-
-        // Function to handle other links (details, delete, create) within the modal
-        $(".details-link, .delete-link, .create-link, .create-lookup-link").click(function (e) {
-            e.preventDefault();
-            var url = $(this).data("url");
-
-            $.get(url, function (data) {
-                $("#modal-content").empty();
-                $("#modal-content").html(data);
-                $("#myModal").modal("show");
             });
         });
     });

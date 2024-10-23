@@ -24,12 +24,16 @@ namespace u23668475_HW03.Controllers
                 var studentsList = await dbContext.students.OrderBy(s => s.name).ToListAsync();
                 var pagedStudents = studentsList.ToPagedList(pageNumber, pageSize);
 
+                var BooksList = await dbContext.books.OrderBy(s => s.name).ToListAsync();
+                var pagedBooks = BooksList.ToPagedList(pageNumber, pageSize);
+
                 var combinedViewModel = new CombinedViewModel
                 {
                     Students = pagedStudents,
-                    Books = await dbContext.books.ToListAsync(),
+                    Books = pagedBooks,
                     Borrows = await dbContext.borrows.ToListAsync(),
-                    Authors = await dbContext.authors.ToListAsync()
+                    Authors = await dbContext.authors.ToListAsync(),
+                    Types = await dbContext.types.ToListAsync()
                 };
                 return View(combinedViewModel);
             }

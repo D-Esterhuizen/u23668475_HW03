@@ -7,112 +7,111 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using u23668475_HW03;
 using u23668475_HW03.Models;
 
 namespace u23668475_HW03.Controllers
 {
-    public class studentsController : Controller
+    public class typesController : Controller
     {
         private LibraryEntities db = new LibraryEntities();
 
-        // GET: students
+        // GET: types
         public async Task<ActionResult> Index()
         {
-            return RedirectToAction("Index", "Home");
+            return View(await db.types.ToListAsync());
         }
 
-        // GET: students/Details/5
+        // GET: types/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            student student = await db.students.FindAsync(id);
-            if (student == null)
+            type type = await db.types.FindAsync(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(type);
         }
 
-        // GET: students/Create
+        // GET: types/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: students/Create
+        // POST: types/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "studentId,name,surname,birthdate,gender,class,point")] student student)
+        public async Task<ActionResult> Create([Bind(Include = "typeId,name")] type type)
         {
             if (ModelState.IsValid)
             {
-                db.students.Add(student);
+                db.types.Add(type);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(student);
+            return View(type);
         }
 
-        // GET: students/Edit/5
+        // GET: types/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            student student = await db.students.FindAsync(id);
-            if (student == null)
+            type type = await db.types.FindAsync(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(type);
         }
 
-        // POST: students/Edit/5
+        // POST: types/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "studentId,name,surname,birthdate,gender,class,point")] student student)
+        public async Task<ActionResult> Edit([Bind(Include = "typeId,name")] type type)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
+                db.Entry(type).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(student);
+            return View(type);
         }
 
-        // GET: students/Delete/5
+        // GET: types/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            student student = await db.students.FindAsync(id);
-            if (student == null)
+            type type = await db.types.FindAsync(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return PartialView(student);
+            return View(type);
         }
 
-        // POST: students/Delete/5
+        // POST: types/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            student student = await db.students.FindAsync(id);
-            db.students.Remove(student);
+            type type = await db.types.FindAsync(id);
+            db.types.Remove(type);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
