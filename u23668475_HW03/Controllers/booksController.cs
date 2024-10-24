@@ -19,8 +19,7 @@ namespace u23668475_HW03.Controllers
         // GET: books
         public async Task<ActionResult> Index()
         {
-            var books = db.books.Include(b => b.author).Include(b => b.type);
-            return View(await books.ToListAsync());
+            return RedirectToAction("Maintain", "Home");
         }
 
         // GET: books/Details/5

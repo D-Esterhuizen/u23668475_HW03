@@ -76,6 +76,38 @@
             background-color: #5a5a5a;
             border-color: #666;
         }
+
+    .btn-details {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        margin-right: 5px;
+    }
+
+        .btn-details:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-edit {
+        background-color: #ffc107;
+        color: white;
+        border: none;
+        margin-right: 5px;
+    }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
 </style>
 <h2>Maintain</h2>
 <div class="row">
@@ -104,8 +136,14 @@
                                     <td>@Html.DisplayFor(modelItem => item.name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.surname)</td>
                                     <td class="text-end">
-                                        <a href="@Url.Action("Details", "authors", new { id = item.authorId })" class="details-link btn-primary">
+                                        <a href="@Url.Action("Details", "authors", new { id = item.authorId })" class="btn btn-details">
                                             Details
+                                        </a>
+                                        <a href="@Url.Action("Delete", "authors", new { id = item.authorId })" class="btn btn-delete">
+                                            Delete
+                                        </a>
+                                        <a href="@Url.Action("Edit", "authors", new { id = item.authorId })" class="btn btn-edit">
+                                            Edit
                                         </a>
                                     </td>
                                 </tr>
@@ -163,8 +201,16 @@
                                     <td>@Html.DisplayFor(modelItem => item.name)</td>
 
                                     <td class="text-end">
-                                        <a href="@Url.Action("Details", "types", new { id = item.typeId })" class="details-link btn-primary">
+                                        
+
+                                        <a href="@Url.Action("Details", "types", new { id = item.typeId })" class="btn btn-details">
                                             Details
+                                        </a>
+                                        <a href="@Url.Action("Delete", "types", new { id = item.typeId })" class="btn btn-delete">
+                                            Delete
+                                        </a>
+                                        <a href="@Url.Action("Edit", "types", new { id = item.typeId })" class="btn btn-edit">
+                                            Edit
                                         </a>
                                     </td>
                                 </tr>
@@ -231,8 +277,15 @@
                                         <td>@Html.DisplayFor(modelItem => item.takenDate)</td>
                                         <td>@Html.DisplayFor(modelItem => item.broughtDate)</td>
                                         <td class="text-end">
-                                            <a href="@Url.Action("Details", "types", new { id = item.borrowId})" class="details-link btn-primary">
+                                           
+                                            <a href="@Url.Action("Details", "borrows", new { id = item.borrowId })" class="btn btn-details">
                                                 Details
+                                            </a>
+                                            <a href="@Url.Action("Delete", "borrows", new { id = item.borrowId })" class="btn btn-delete">
+                                                Delete
+                                            </a>
+                                            <a href="@Url.Action("Edit", "borrows", new { id = item.borrowId })" class="btn btn-edit">
+                                                Edit
                                             </a>
                                         </td>
                                     </tr>

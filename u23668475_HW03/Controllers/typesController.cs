@@ -18,7 +18,7 @@ namespace u23668475_HW03.Controllers
         // GET: types
         public async Task<ActionResult> Index()
         {
-            return View(await db.types.ToListAsync());
+            return RedirectToAction("Maintain", "Home");
         }
 
         // GET: types/Details/5

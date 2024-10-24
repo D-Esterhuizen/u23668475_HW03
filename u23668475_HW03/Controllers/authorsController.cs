@@ -19,7 +19,7 @@ namespace u23668475_HW03.Controllers
         // GET: authors
         public async Task<ActionResult> Index()
         {
-            return View(await db.authors.ToListAsync());
+            return RedirectToAction("Maintain", "Home");
         }
 
         // GET: authors/Details/5

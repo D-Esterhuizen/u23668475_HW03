@@ -1,4 +1,4 @@
-﻿@model u23668475_HW03.borrow
+﻿@model u23668475_HW03.Models.borrow
 
 @{
     ViewBag.Title = "Delete";
@@ -45,7 +45,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
