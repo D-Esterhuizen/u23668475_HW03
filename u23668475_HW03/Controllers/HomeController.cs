@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using u23668475_HW03.Models;
 using System.Web.UI;
 using PagedList;
+using System.Drawing.Printing;
 
 namespace u23668475_HW03.Controllers
 {
@@ -38,6 +39,35 @@ namespace u23668475_HW03.Controllers
                 return View(combinedViewModel);
             }
                 
+        }
+        public async Task<ActionResult> Maintain(int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            using (var dbContext = new LibraryEntities())
+            {
+                var AuthorsList = await dbContext.authors.OrderBy(s => s.name).ToListAsync();
+                var pagedAuthors = AuthorsList.ToPagedList(pageNumber, pageSize);
+
+
+                var BorrowsList = await dbContext.borrows.ToListAsync();
+                var pagedBorrows = BorrowsList.ToPagedList(pageNumber, pageSize);
+
+
+                var TypesList = await dbContext.types.OrderBy(s => s.name).ToListAsync();
+                var pagedTypes = TypesList.ToPagedList(pageNumber, pageSize);
+
+                var combinedViewModel = new CombinedViewModel
+                {
+                    Students = await dbContext.students.ToListAsync(),
+                    Books = await dbContext.books.ToListAsync(),
+                    Borrows = pagedBorrows,
+                    Authors = pagedAuthors,
+                    Types = pagedTypes
+                };
+                return View(combinedViewModel);
+            }
         }
 
         public ActionResult About()
