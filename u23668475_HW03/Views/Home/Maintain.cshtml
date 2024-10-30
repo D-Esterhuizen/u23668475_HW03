@@ -112,7 +112,7 @@
 <h2>Maintain</h2>
 <div class="row">
     <div class="col-md-6">
-        
+
         <div class="card shadow-sm">
             <div class="card-body" style="background-color: #878787b3">
                 <h2 class="mb-4">Authors</h2>
@@ -142,7 +142,7 @@
                                         <a href="@Url.Action("Delete", "authors", new { id = item.authorId })" class="btn btn-delete">
                                             Delete
                                         </a>
-                                        <a href="@Url.Action("Edit", "authors", new { id = item.authorId })" class="btn btn-edit">
+                                        <a href="@Url.Action("Edit", "authors", new { id = item.authorId })" class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#myModal">
                                             Edit
                                         </a>
                                     </td>
@@ -173,10 +173,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-6">
-        
-        
+
+
         <div class="card shadow-sm">
             <div class="card-body" style="background-color: #878787b3">
                 <h2 class="mb-4">Types</h2>
@@ -201,7 +201,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.name)</td>
 
                                     <td class="text-end">
-                                        
+
 
                                         <a href="@Url.Action("Details", "types", new { id = item.typeId })" class="btn btn-details">
                                             Details
@@ -277,14 +277,14 @@
                                         <td>@Html.DisplayFor(modelItem => item.takenDate)</td>
                                         <td>@Html.DisplayFor(modelItem => item.broughtDate)</td>
                                         <td class="text-end">
-                                           
+
                                             <a href="@Url.Action("Details", "borrows", new { id = item.borrowId })" class="btn btn-details">
                                                 Details
                                             </a>
                                             <a href="@Url.Action("Delete", "borrows", new { id = item.borrowId })" class="btn btn-delete">
                                                 Delete
                                             </a>
-                                            <a href="@Url.Action("Edit", "borrows", new { id = item.borrowId })" class="btn btn-edit">
+                                            <a href="@Url.Action("Edit", "borrows", new { id = item.borrowId })" class="btn btn-edit" >
                                                 Edit
                                             </a>
                                         </td>
@@ -317,4 +317,21 @@
         </div>
     </div>
 
+</div>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Sample Entity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Render the partial view here -->
+            <div class="modal-body">
+                @Html.Partial("~/Views/authors/_Edit.cshtml", new u23668475_HW03.Models.author())
+            </div>
+        </div>
+    </div>
 </div>

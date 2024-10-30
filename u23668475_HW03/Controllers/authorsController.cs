@@ -72,7 +72,7 @@ namespace u23668475_HW03.Controllers
             {
                 return HttpNotFound();
             }
-            return View(author);
+            return PartialView(author);
         }
 
         // POST: authors/Edit/5
@@ -88,7 +88,7 @@ namespace u23668475_HW03.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(author);
+            return PartialView(author);
         }
 
         // GET: authors/Delete/5

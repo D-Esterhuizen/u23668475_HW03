@@ -9,6 +9,9 @@ using u23668475_HW03.Models;
 using System.Web.UI;
 using PagedList;
 using System.Drawing.Printing;
+using Newtonsoft.Json;
+
+
 
 namespace u23668475_HW03.Controllers
 {
@@ -70,18 +73,40 @@ namespace u23668475_HW03.Controllers
             }
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
+
+        public async Task<ActionResult> Reports()
+        {
+            using (var dbContext = new LibraryEntities())
+            {
+                var combinedViewModel = new CombinedViewModel
+                {
+                    Students = await dbContext.students.Include(s => s.borrows).ToListAsync(),
+                    Books = await dbContext.books.ToListAsync(),
+                    Borrows = await dbContext.borrows.ToListAsync(),
+                    Authors = await dbContext.authors.Include(a => a.books).ToListAsync(),
+                    Types = await dbContext.types.ToListAsync()
+                };
+
+                // Calculate the top loaned books by grouping borrows by bookId and counting
+                var topLoanedBooks = combinedViewModel.Borrows
+                    .GroupBy(b => b.bookId)
+                    .Select(g => new
+                    {
+                        BookId = g.Key,
+                        BookName = combinedViewModel.Books.FirstOrDefault(b => b.bookId == g.Key)?.name,
+                        BorrowCount = g.Count()
+                    })
+                    .OrderByDescending(b => b.BorrowCount)
+                    .Take(5) // Top 5 most borrowed books
+                    .ToList();
+
+                ViewBag.TopLoanedBooks = topLoanedBooks;
+                ViewBag.Message = "Generate Reports";
+
+                return View(combinedViewModel);
+            }
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
