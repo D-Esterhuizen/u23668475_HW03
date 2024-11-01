@@ -23,6 +23,7 @@ namespace u23668475_HW03.Controllers
         }
 
         // GET: books/Details/5
+        [HttpGet]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)

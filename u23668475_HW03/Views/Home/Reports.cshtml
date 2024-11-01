@@ -24,6 +24,11 @@
             </select>
         </div>
 
+        <div class="col-auto mb-4">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="4" style="resize: both; min-height: 50px;"></textarea>
+        </div>
+
         <!-- Save Button -->
         <div class="col-auto mb-4" style="margin-top: 31px;">
             <button id="saveButton" class="btn btn-primary" onclick="saveReport()">Save</button>
@@ -41,7 +46,7 @@
             </tr>
         </thead>
         <tbody id="documentArchiveBody">
-            <!-- Rows will be filled with JavaScript -->
+            
         </tbody>
     </table>
 </div>
@@ -54,10 +59,11 @@
         // Retrieve values
         const fileName = document.getElementById("fileName").value.trim();
         const fileType = document.getElementById("fileType").value;
+        const description = document.getElementById("description").value.trim();
 
         // Validate that both inputs are filled
-        if (!fileName || !fileType) {
-            alert("Please enter a file name and select a file type.");
+        if (!fileName || !fileType || !description) {
+            alert("Please enter a file name, select a file type and add a description.");
             return;
         }
 
@@ -76,11 +82,15 @@
         } else if (fileType === "pdf") {
             // Create a PDF with the chart image
             const PDFChart = {
-                content: [{
-                    image: chartImage,
-                    width: 500
-
-                }]
+                content: [
+                    
+                    {
+                        image: chartImage,
+                        width: 500
+                    },
+                    { text: 'Description: ', bold: true },
+                    description
+                ]
             };
             pdfMake.createPdf(PDFChart).download(`${fileName}.pdf`);
         }

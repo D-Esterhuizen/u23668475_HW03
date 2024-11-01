@@ -274,7 +274,7 @@
     <Content Include="Views\types\Edit.cshtml" />
     <Content Include="Views\types\Index.cshtml" />
     <Content Include="Views\Home\Maintain.cshtml" />
-    <Content Include="Views\authors\_Edit.cshtml" />
+    <Content Include="Views\authors\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

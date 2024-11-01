@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using u23668475_HW03;
 using u23668475_HW03.Models;
+using PagedList;
 
 namespace u23668475_HW03.Controllers
 {
@@ -21,6 +22,7 @@ namespace u23668475_HW03.Controllers
         {
             return RedirectToAction("Maintain", "Home");
         }
+        
 
         // GET: authors/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -54,7 +56,7 @@ namespace u23668475_HW03.Controllers
             {
                 db.authors.Add(author);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Maintain", "Home");
             }
 
             return View(author);
@@ -72,7 +74,7 @@ namespace u23668475_HW03.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView(author);
+            return View(author);
         }
 
         // POST: authors/Edit/5
@@ -88,7 +90,7 @@ namespace u23668475_HW03.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return PartialView(author);
+            return View(author);
         }
 
         // GET: authors/Delete/5

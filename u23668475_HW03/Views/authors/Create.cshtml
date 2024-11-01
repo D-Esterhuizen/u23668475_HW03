@@ -1,6 +1,7 @@
 ﻿@model u23668475_HW03.Models.author
 
 @{
+    
     ViewBag.Title = "Create";
 }
 
@@ -48,4 +49,19 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        // Check if the current page is loaded in an iframe
+        if (window.self !== window.top) {
+            // Redirects to the "Maintain" page, close modal from parent if redirected
+            if (window.location.href.includes("Maintain")) {
+                // Close the modal
+                parent.$('#dynamicModal').modal('hide');
+
+                // Redirect the parent window to the Maintain page
+                parent.window.location.href = '@Url.Action("Maintain", "Home")';
+            }
+        }
+    </script>
+
 }
