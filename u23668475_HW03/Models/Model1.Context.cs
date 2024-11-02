@@ -30,5 +30,6 @@ namespace u23668475_HW03.Models
         public virtual DbSet<borrow> borrows { get; set; }
         public virtual DbSet<student> students { get; set; }
         public virtual DbSet<type> types { get; set; }
+        public virtual DbSet<ChartArchive> ChartArchives { get; set; }
     }
 }

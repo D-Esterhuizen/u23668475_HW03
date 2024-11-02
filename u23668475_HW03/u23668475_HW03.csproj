@@ -137,6 +137,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChartArchivesController.cs" />
     <Compile Include="Controllers\typesController.cs" />
     <Compile Include="Models\author.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -154,6 +155,9 @@
     <Compile Include="Controllers\studentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChartArchive.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CombinedViewModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
@@ -275,6 +279,11 @@
     <Content Include="Views\types\Index.cshtml" />
     <Content Include="Views\Home\Maintain.cshtml" />
     <Content Include="Views\authors\Edit.cshtml" />
+    <Content Include="Views\ChartArchives\Create.cshtml" />
+    <Content Include="Views\ChartArchives\Delete.cshtml" />
+    <Content Include="Views\ChartArchives\Details.cshtml" />
+    <Content Include="Views\ChartArchives\Edit.cshtml" />
+    <Content Include="Views\ChartArchives\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
