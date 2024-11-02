@@ -85,7 +85,8 @@ namespace u23668475_HW03.Controllers
                     Books = await dbContext.books.ToListAsync(),
                     Borrows = await dbContext.borrows.ToListAsync(),
                     Authors = await dbContext.authors.Include(a => a.books).ToListAsync(),
-                    Types = await dbContext.types.ToListAsync()
+                    Types = await dbContext.types.ToListAsync(),
+                    ChartArchives = await dbContext.ChartArchives.ToListAsync()
                 };
 
                 // Calculate the top loaned books by grouping borrows by bookId and counting

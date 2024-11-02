@@ -6,6 +6,7 @@
 <div>
     <canvas id="loanedBooksChart" style="height: 370px; width: 100%;"></canvas>
 </div>
+
 <div class="container">
     <div class="row justify-content-center">
         <!-- File Name Input -->
@@ -35,7 +36,6 @@
         </div>
     </div>
 </div>
-
 <div class="container mt-5">
     <h3>Document Archive</h3>
     <table class="table table-bordered">
@@ -44,17 +44,17 @@
                 <th>File Name</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody id="documentArchiveBody">
-            
-        </tbody>
     </table>
 </div>
 
+<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+
+
     function saveReport() {
         // Retrieve values
         const fileName = document.getElementById("fileName").value.trim();
@@ -63,7 +63,7 @@
 
         // Validate that both inputs are filled
         if (!fileName || !fileType || !description) {
-            alert("Please enter a file name, select a file type and add a description.");
+            alert("Please enter a file name, select a file type, and add a description.");
             return;
         }
 
@@ -76,33 +76,38 @@
         if (fileType === "png") {
             // Create a link to download the image as PNG
             const link = document.createElement('a');
-            link.href = chartImage;
-            link.download = `${fileName}.png`;
+            link.href = chartImage; // this is the base64 image
+            link.download = fileName + ".png"; // use proper string concatenation
             link.click();
         } else if (fileType === "pdf") {
             // Create a PDF with the chart image
             const PDFChart = {
-                content: [
-                    
-                    {
-                        image: chartImage,
-                        width: 500
-                    },
-                    { text: 'Description: ', bold: true },
-                    description
-                ]
-            };
-            pdfMake.createPdf(PDFChart).download(`${fileName}.pdf`);
+    content: [
+        {
+            image: chartImage, // Use the entire base64 image string
+            width: 500
+        },
+        { text: 'Description: ', bold: true },
+        description
+    ]
+};
+            pdfMake.createPdf(PDFChart).download(fileName + ".pdf"); // proper string concatenation
         }
     }
 
+
+    
     function convertChartToImage() {
-        const chartCanvas = document.getElementById('loanedBooksChart');
-        return chartCanvas ? chartCanvas.toDataURL('image/png') : null;
-    }
+    const chartCanvas = document.getElementById('loanedBooksChart');
+    const dataURL = chartCanvas ? chartCanvas.toDataURL('image/png') : null;
+    return dataURL;
+}
+
+
+
 
     document.addEventListener("DOMContentLoaded", function () {
-        // Process data for the top loaned books
+        // Process data for the top loaned books (as you already have)
         const booksData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Borrows
             .GroupBy(b => b.book.name)
             .Select(g => new { BookName = g.Key, BorrowCount = g.Count() })
@@ -116,7 +121,7 @@
         // Create the chart using Chart.js
         const ctx = document.getElementById('loanedBooksChart').getContext('2d');
         const loanedBooksChart = new Chart(ctx, {
-            type: 'bar', // Bar chart for top loaned books
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{

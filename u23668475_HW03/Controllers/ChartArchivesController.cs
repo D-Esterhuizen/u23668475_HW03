@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using u23668475_HW03.Models;
+using System.IO;
 
 namespace u23668475_HW03.Controllers
 {
@@ -49,17 +50,24 @@ namespace u23668475_HW03.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ChartID,FileName,FileType,ChartData")] ChartArchive chartArchive)
+        public async Task<ActionResult> Create(string fileName, string fileType, byte[] chartData)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrWhiteSpace(fileName) && !string.IsNullOrWhiteSpace(fileType) && chartData != null)
             {
-                db.ChartArchives.Add(chartArchive);
+                var newChart = new ChartArchive
+                {
+                    FileName = fileName,
+                    FileType = fileType,
+                    ChartData = chartData
+                };
+
+                db.ChartArchives.Add(newChart);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            return View(chartArchive);
+            return View();
         }
+        
 
         // GET: ChartArchives/Edit/5
         public async Task<ActionResult> Edit(int? id)

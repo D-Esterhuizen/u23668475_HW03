@@ -14,5 +14,6 @@ namespace u23668475_HW03.Models
         public IEnumerable<borrow> Borrows { get; set; }
         public IEnumerable<author> Authors { get; set; }
         public IEnumerable<type> Types { get; set; }
+        public IEnumerable<ChartArchive> ChartArchives { get; set; }
     }
 }
