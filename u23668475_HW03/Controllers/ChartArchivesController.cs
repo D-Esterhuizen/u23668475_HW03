@@ -67,7 +67,34 @@ namespace u23668475_HW03.Controllers
             }
             return View();
         }
-        
+        [HttpPost]
+        public async Task<ActionResult> SaveReport(string fileName, string fileType, string base64Image)
+        {
+            if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(fileType) || string.IsNullOrEmpty(base64Image))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid data.");
+                return View("Maintain", new CombinedViewModel { ChartArchives = await db.ChartArchives.ToListAsync() });
+            }
+
+            // Convert Base64 string to byte array
+            var imageData = Convert.FromBase64String(base64Image.Split(',')[1]);
+
+            // Save report data
+            var report = new ChartArchive
+            {
+                FileName = fileName,
+                FileType = fileType,
+                ChartData = imageData
+            };
+
+            db.ChartArchives.Add(report);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Reports", "Home");
+        }
+
+
+
 
         // GET: ChartArchives/Edit/5
         public async Task<ActionResult> Edit(int? id)
